@@ -37,7 +37,7 @@ const AyathCard = ({ verseNumber, surahName, verseKey, arabicText, translation }
                 {translation && !showAllTranslations && (
                     <button
                         onClick={() => setLocalShow((prev) => !prev)}
-                        className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-bg-main text-text-muted hover:border-brand/40 hover:text-brand transition-colors duration-150"
+                        className="text-[11px] px-2.5 py-1 rounded-full border border-border bg-bg-main text-text-muted hover:border-brand/40 hover:text-brand"
                     >
                         {localShow ? "Hide" : "Translation"}
                     </button>
@@ -49,7 +49,7 @@ const AyathCard = ({ verseNumber, surahName, verseKey, arabicText, translation }
                 dir="rtl"
                 lang="ar"
                 style={{ fontSize: `${fontSize}px` }}
-                className={`text-right leading-loose tracking-wide text-text-primary transition-all duration-200 ${arabicClass}`}
+                className={`text-right leading-loose tracking-wide text-text-primary ${arabicClass}`}
             >
                 {arabicText}
             </p>

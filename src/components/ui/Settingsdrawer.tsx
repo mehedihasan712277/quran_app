@@ -88,7 +88,7 @@ const SettingsDrawer = () => {
                                 <button
                                     key={value}
                                     onClick={() => setFontFamily(value)}
-                                    className={`flex flex-col items-center gap-2 rounded-xl border px-3 py-3.5 transition-all duration-150 ${
+                                    className={`flex flex-col items-center gap-2 rounded-xl border px-3 py-3.5 ${
                                         fontFamily === value
                                             ? "border-brand/40 bg-brand/5 ring-1 ring-brand/20"
                                             : "border-border bg-bg-soft hover:border-brand/20 hover:bg-bg-main"
@@ -122,7 +122,7 @@ const SettingsDrawer = () => {
                                 <button
                                     key={value}
                                     onClick={() => setFontSize(value)}
-                                    className={`flex-1 rounded-lg border py-1.5 text-[10px] font-semibold uppercase tracking-wide transition-all duration-150 ${
+                                    className={`flex-1 rounded-lg border py-1.5 text-[10px] font-semibold uppercase tracking-wide ${
                                         fontSize === value
                                             ? "border-brand/40 bg-brand/5 text-brand ring-1 ring-brand/20"
                                             : "border-border bg-bg-soft text-text-muted hover:border-brand/20"
@@ -150,7 +150,7 @@ const SettingsDrawer = () => {
                         <SectionLabel icon={Languages} label="Translation" />
                         <button
                             onClick={() => setShowAllTranslations(!showAllTranslations)}
-                            className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 transition-all duration-150 ${
+                            className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 ${
                                 showAllTranslations ? "border-brand/40 bg-brand/5" : "border-border bg-bg-soft hover:border-brand/20"
                             }`}
                         >
@@ -173,7 +173,7 @@ const SettingsDrawer = () => {
                             dir="rtl"
                             lang="ar"
                             style={{ fontSize: `${fontSize}px` }}
-                            className={`text-right leading-loose text-text-primary transition-all duration-200 ${
+                            className={`text-right leading-loose text-text-primary ${
                                 fontFamily === "naskh" ? "font-arabic-naskh" : "font-arabic-kufi"
                             }`}
                         >
