@@ -34,6 +34,10 @@
     --font-sans: var(--font-outfit), system-ui, sans-serif;
     --font-montserrat: var(--font-montserrat), system-ui, sans-serif;
     --font-outfit: var(--font-outfit), system-ui, sans-serif;
+
+    /* Arabic fonts */
+    --font-arabic-kufi: var(--font-noto-kufi), sans-serif;
+    --font-arabic-naskh: var(--font-noto-naskh), serif;
 }
 
 /* ====================== DARK MODE OVERRIDES ====================== */
