@@ -1,26 +1,105 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ====================== THEME ====================== */
+@theme {
+    --color-brand-start: oklch(0.62 0.22 274);
+    --color-brand-end: oklch(0.35 0.2 292);
+    --color-brand: oklch(40.23% 0.17 274.6);
+
+    /* Backgrounds */
+    --color-bg-main: oklch(1 0 0);
+    --color-bg-soft: oklch(0.97 0.005 240);
+    --color-border: oklch(0.92 0.01 240);
+
+    /* Grid */
+    --color-grid: oklch(0.9746 0.0021 197.12); /* light mode subtle grid */
+
+    /* Text */
+    --color-text-primary: oklch(0.13 0.01 240);
+    --color-text-secondary: oklch(0.4 0.015 240);
+    --color-text-muted: oklch(0.58 0.012 240);
+    --color-text-disabled: oklch(0.75 0.008 240);
+    --color-text-inverse: oklch(0.98 0 0);
+
+    /* ── Custom breakpoints ── */
+    --breakpoint-14i: 85rem; /* 1360px */
+    --breakpoint-2xl: 82rem; /* 1312px */
+
+    /* ── Brand Gradient (for backgrounds) ── */
+    --background-image-brand-gradient: linear-gradient(135deg, var(--color-brand-start), var(--color-brand-end));
 }
 
+/* ====================== FONTS ====================== */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --font-sans: var(--font-outfit), system-ui, sans-serif;
+    --font-montserrat: var(--font-montserrat), system-ui, sans-serif;
+    --font-outfit: var(--font-outfit), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ====================== DARK MODE OVERRIDES ====================== */
+@layer base {
+    :root {
+        color-scheme: light dark;
+    }
+
+    .dark {
+        /* Backgrounds */
+        --color-bg-main: oklch(0.145 0.01 240);
+        --color-bg-soft: oklch(0.21 0.01 240);
+        --color-border: oklch(0.3 0.01 240);
+
+        /* Text */
+        --color-text-primary: oklch(0.95 0.005 240);
+        --color-text-secondary: oklch(0.72 0.012 240);
+        --color-text-muted: oklch(0.55 0.01 240);
+        --color-text-disabled: oklch(0.38 0.008 240);
+        --color-text-inverse: oklch(0.13 0.01 240);
+
+        /* Brand gradient stays vibrant in dark mode too */
+    }
+
+    body {
+        @apply bg-bg-main text-text-primary antialiased;
+        font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    button {
+        @apply cursor-pointer;
+    }
+
+    .hero-grid-bg {
+        background-color: var(--color-bg-main);
+        background-image:
+            linear-gradient(to right, var(--color-grid) 1px, transparent 1px), linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+        background-size: 60px 60px;
+    }
+
+    .dark .hero-grid-bg {
+        --color-grid: oklch(20.394% 0.00255 248.163); /* darker grid in dark mode */
+    }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------------custom scroll bar------------------- */
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: var(--color-bg-muted);
+    border-radius: 40px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--color-text-muted);
+    /* background-color: red; */
+    border-radius: 40px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-text-secondary);
 }
