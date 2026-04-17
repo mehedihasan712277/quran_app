@@ -60,10 +60,8 @@ const SurahCard = ({ surah }: { surah: SurahName }) => (
     </div>
 );
 
-const AllSurahList = async () => {
+const AllSurahList = async ({ classes = "grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-5xl mx-auto" }: { classes: string }) => {
     const allSurahList = await getSurahNames();
-    // const allSura = await getSurahs();
-
     return (
         <div className="space-y-5">
             {/* Header */}
@@ -73,7 +71,7 @@ const AllSurahList = async () => {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+            <div className={classes}>
                 {allSurahList.map((surah) => (
                     <Link href={`/surah/${surah.index}`} key={surah._id}>
                         <SurahCard surah={surah} />

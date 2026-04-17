@@ -56,10 +56,11 @@ export default function RootLayout({
         >
             <body className="min-h-full">
                 <ThemeProvider>
-                    <Navbar></Navbar>
-                    <div className="pb-20">{children}</div>
+                    <div className="sticky top-0 z-10 bg-bg-main">
+                        <Navbar></Navbar>
+                    </div>
+                    <div>{children}</div>
                 </ThemeProvider>
-                <div className="pb-20">{children}</div>
             </body>
         </html>
     );
