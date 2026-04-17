@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat, Outfit } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/shared/theme/ThemeProvider";
+import Navbar from "@/components/shared/Navbar";
 
 const outfit = Outfit({
     subsets: ["latin"],
@@ -18,8 +20,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-    title: "Sakib",
-    description: "Personal portfolio of Sakib Akondo",
+    title: "Al Quran",
+    description: "This ia an online Quran app",
 };
 
 export default function RootLayout({
@@ -30,6 +32,10 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${outfit.variable} ${montserrat.variable} h-full antialiased`}>
             <body className="min-h-full">
+                <ThemeProvider>
+                    <Navbar></Navbar>
+                    <div className="pb-20">{children}</div>
+                </ThemeProvider>
                 <div className="pb-20">{children}</div>
             </body>
         </html>
