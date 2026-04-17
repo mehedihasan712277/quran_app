@@ -1,5 +1,4 @@
 import Image from "next/image";
-import SearchBox from "./SearchBox";
 import ThemeSwitcher from "./theme/ThemeSwitcher";
 import logo from "@/assets/quran.png";
 
@@ -10,8 +9,6 @@ const Navbar = () => {
                 <div>
                     <Image src={logo} width={40} height={40} alt="logo"></Image>
                 </div>
-                <SearchBox></SearchBox>
-
                 <div className="flex items-center gap-2">
                     <div className="text-text-muted">
                         <svg

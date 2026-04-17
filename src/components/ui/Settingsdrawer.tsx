@@ -3,7 +3,6 @@
 import { X, Type, Languages, SlidersHorizontal } from "lucide-react";
 import { FontFamily, useSurahSettings } from "../shared/Surahsettingscontext";
 
-/* ─── Section label ─────────────────────────────────── */
 const SectionLabel = ({ icon: Icon, label }: { icon: React.ElementType; label: string }) => (
     <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-text-muted">
         <Icon size={11} strokeWidth={2.5} />
@@ -11,7 +10,6 @@ const SectionLabel = ({ icon: Icon, label }: { icon: React.ElementType; label: s
     </div>
 );
 
-/* ─── Toggle switch ──────────────────────────────────── */
 const ToggleSwitch = ({ checked, onChange }: { checked: boolean; onChange: () => void }) => (
     <button
         role="switch"
@@ -29,7 +27,6 @@ const ToggleSwitch = ({ checked, onChange }: { checked: boolean; onChange: () =>
     </button>
 );
 
-/* ─── Main component ─────────────────────────────────── */
 const SettingsDrawer = () => {
     const { fontFamily, setFontFamily, fontSize, setFontSize, showAllTranslations, setShowAllTranslations, drawerOpen, setDrawerOpen } =
         useSurahSettings();
@@ -54,7 +51,6 @@ const SettingsDrawer = () => {
                 <div className="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm transition-opacity lg:hidden" onClick={() => setDrawerOpen(false)} />
             )}
 
-            {/* Panel — fixed on mobile, relative in grid on desktop */}
             <div
                 className={`
                     fixed right-0 top-0 z-40 h-full w-72 overflow-y-auto custom-scrollbar
@@ -116,7 +112,6 @@ const SettingsDrawer = () => {
                             <span className="text-[11px] font-semibold text-brand">{fontSize}px</span>
                         </div>
 
-                        {/* Step buttons */}
                         <div className="flex gap-1.5">
                             {sizeSteps.map(({ label, value }) => (
                                 <button
@@ -133,7 +128,6 @@ const SettingsDrawer = () => {
                             ))}
                         </div>
 
-                        {/* Slider */}
                         <input
                             type="range"
                             min={18}
@@ -148,9 +142,13 @@ const SettingsDrawer = () => {
                     {/* ── Translation toggle ── */}
                     <div className="space-y-3">
                         <SectionLabel icon={Languages} label="Translation" />
-                        <button
+                        {/* ↓ Changed from <button> to <div> to avoid nested button (ToggleSwitch is also a button) */}
+                        <div
+                            role="button"
+                            tabIndex={0}
                             onClick={() => setShowAllTranslations(!showAllTranslations)}
-                            className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 ${
+                            onKeyDown={(e) => (e.key === "Enter" || e.key === " " ? setShowAllTranslations(!showAllTranslations) : undefined)}
+                            className={`flex w-full cursor-pointer items-center justify-between rounded-xl border px-4 py-3 ${
                                 showAllTranslations ? "border-brand/40 bg-brand/5" : "border-border bg-bg-soft hover:border-brand/20"
                             }`}
                         >
@@ -162,8 +160,11 @@ const SettingsDrawer = () => {
                                     {showAllTranslations ? "Shown for every verse" : "Click per verse to reveal"}
                                 </p>
                             </div>
-                            <ToggleSwitch checked={showAllTranslations} onChange={() => setShowAllTranslations(!showAllTranslations)} />
-                        </button>
+                            {/* stopPropagation prevents the div's onClick from firing twice */}
+                            <span onClick={(e) => e.stopPropagation()}>
+                                <ToggleSwitch checked={showAllTranslations} onChange={() => setShowAllTranslations(!showAllTranslations)} />
+                            </span>
+                        </div>
                     </div>
 
                     {/* ── Live preview ── */}

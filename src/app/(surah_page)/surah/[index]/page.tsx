@@ -1,8 +1,8 @@
 import AyathCard from "@/components/ui/AyathCard";
+import AyahSearchBox from "@/components/ui/AyahSearchBox";
 import { getSingleSurah, getSingleTranslation, getSurahNames } from "@/utils/fetchData";
 import { Surah, Translation } from "@/utils/types";
 
-// ── Pre-generate all surah pages at build time ──
 export async function generateStaticParams() {
     const surahNames = await getSurahNames();
     return surahNames.map((surah) => ({ index: surah.index }));
@@ -10,17 +10,15 @@ export async function generateStaticParams() {
 
 const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => {
     const { index } = await params;
-    // fetch both at the same time
     const [surah, translation]: [Surah, Translation] = await Promise.all([getSingleSurah(index), getSingleTranslation(index)]);
 
     const verses = Object.entries(surah.verse);
 
     return (
-        <main className=" bg-bg-main">
+        <main className="bg-bg-main">
             <div>
                 {/* ── Header Banner ── */}
                 <div className="relative overflow-hidden bg-brand-gradient py-16 px-6">
-                    {/* Decorative geometric overlay */}
                     <div
                         className="pointer-events-none absolute inset-0 opacity-10"
                         style={{
@@ -28,20 +26,12 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
                             backgroundSize: "24px 24px",
                         }}
                     />
-
                     <div className="relative mx-auto max-w-3xl text-center">
-                        {/* Surah index badge */}
                         <span className="mb-4 inline-block rounded-full border border-white/30 bg-white/10 px-4 py-1 text-sm font-medium text-white/80 backdrop-blur-sm">
                             Surah {surah.index}
                         </span>
-
-                        {/* English name */}
                         <h1 className="font-outfit text-4xl font-bold tracking-tight text-white md:text-5xl">{surah.name}</h1>
-
-                        {/* Divider line */}
                         <div className="mx-auto my-5 h-px w-24 bg-white/30" />
-
-                        {/* Stats row */}
                         <div className="flex justify-center gap-8 text-white/70 text-sm">
                             <div className="flex flex-col items-center gap-0.5">
                                 <span className="text-2xl font-semibold text-white">{surah.count}</span>
@@ -78,9 +68,13 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
                     </div>
                 )}
 
-                {/* ── Verses ── */}
+                {/* ── Search box ── */}
+                <section className="py-8 px-4 max-w-3xl mx-auto">
+                    <AyahSearchBox verses={verses} translations={translation.verse} surahName={surah.name} />
+                </section>
 
-                <section className="py-12 space-y-4">
+                {/* ── All Verses (when not searching) ── */}
+                <section className="py-4 space-y-4 px-4 max-w-3xl mx-auto">
                     {verses.map(([key, text], i) => (
                         <AyathCard
                             key={key}
