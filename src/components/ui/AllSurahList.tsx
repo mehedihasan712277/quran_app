@@ -16,7 +16,7 @@ const typeBadge = (type: string) => {
 };
 
 const SurahCard = ({ surah }: { surah: SurahName }) => (
-    <div className="group relative bg-bg-main border border-border rounded-xl px-4 py-3.5 flex flex-col gap-2.5 cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:bg-bg-soft hover:shadow-[0_4px_16px_oklch(40.23%_0.17_274.6/0.07)] overflow-hidden">
+    <div className="group relative bg-bg-main border border-border rounded-xl px-4 py-3.5 flex flex-col gap-2.5 cursor-pointer transition-transform duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:bg-bg-soft hover:shadow-[0_4px_16px_oklch(40.23%_0.17_274.6/0.07)] overflow-hidden">
         {/* Left accent bar */}
         <span className="absolute left-0 top-0 bottom-0 w-0.75 rounded-l-xl bg-linear-to-b from-brand-start to-brand-end opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
 
@@ -62,6 +62,7 @@ const SurahCard = ({ surah }: { surah: SurahName }) => (
 
 const AllSurahList = async () => {
     const allSurahList = await getSurahNames();
+    // const allSura = await getSurahs();
 
     return (
         <div className="space-y-5">

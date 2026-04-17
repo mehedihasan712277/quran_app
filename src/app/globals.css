@@ -66,10 +66,10 @@
         @apply bg-bg-main text-text-primary antialiased;
         font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     }
-
+    /* 
     html {
         scroll-behavior: smooth;
-    }
+    } */
 
     button {
         @apply cursor-pointer;

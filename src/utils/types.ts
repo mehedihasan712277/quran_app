@@ -1,11 +1,4 @@
 // surah------------------------
-export interface Juz {
-    index: string;
-    verse: {
-        start: string;
-        end: string;
-    };
-}
 
 export interface Surah {
     _id: string;
@@ -19,6 +12,7 @@ export interface Surah {
 
     juz: {
         index: string;
+        _id: string;
         verse: {
             start: string;
             end: string;
