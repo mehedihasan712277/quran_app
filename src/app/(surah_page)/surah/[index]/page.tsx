@@ -1,12 +1,10 @@
-import AyathCard from "@/components/ui/AyathCard";
-import AyahSearchBox from "@/components/ui/AyahSearchBox";
-import { getSingleSurah, getSingleTranslation, getSurahNames } from "@/utils/fetchData";
+import { getSingleSurah, getSingleTranslation } from "@/utils/fetchData";
 import { Surah, Translation } from "@/utils/types";
+import bg from "@/assets/bg1.jpg";
+import Image from "next/image";
 
-export async function generateStaticParams() {
-    const surahNames = await getSurahNames();
-    return surahNames.map((surah) => ({ index: surah.index }));
-}
+import SurahPageClient from "@/components/ui/SurahPageClient";
+// ... other imports
 
 const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => {
     const { index } = await params;
@@ -15,17 +13,18 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
     const verses = Object.entries(surah.verse);
 
     return (
-        <main className="bg-bg-main pt-2">
-            <div>
+        <main className="bg-bg-main">
+            <div className="space-y-6">
                 <div className="border border-border rounded-2xl overflow-hidden">
                     {/* ── Header Banner ── */}
-                    <div className="relative overflow-hidden bg-bg-soft py-16 px-6">
-                        <div className="relative mx-auto max-w-3xl text-center">
-                            <span className="mb-4 inline-block rounded-full border border-white/30 bg-brand/10 px-4 py-1 text-sm font-medium text-text-primary backdrop-blur-sm">
+                    <div className="relative overflow-hidden py-12 px-6 w-full">
+                        <Image src={bg} alt="bg" fill className="absolute inset-0 z-0 object-cover opacity-30" />
+                        <div className="relative z-10 mx-auto max-w-3xl text-center space-y-4">
+                            <span className="inline-block rounded-full border border-white/30 bg-brand/10 px-4 py-1 text-sm font-medium text-text-primary backdrop-blur-sm">
                                 Surah {surah.index}
                             </span>
                             <h1 className="font-outfit text-2xl text-text-primary">{surah.name}</h1>
-                            <div className="flex justify-center gap-8 text-text-primary/70 text-sm">
+                            <div className="flex justify-center gap-8 text-text-primary/70 text-sm py-6">
                                 <div className="flex flex-col items-center gap-0.5">
                                     <span className="text-2xl font-semibold text-text-primary">{surah.count}</span>
                                     <span>Verses</span>
@@ -42,17 +41,15 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
                                 </div>
                             </div>
 
-                            {/* ── Search box ── */}
-                            <section className="py-8 mx-auto">
-                                <AyahSearchBox verses={verses} translations={translation.verse} surahName={surah.name} />
-                            </section>
+                            {/* ── Search input only ── */}
+                            <section className="mx-auto">{/* rendered inside SurahPageClient below */}</section>
                         </div>
                     </div>
 
                     {/* ── Juz Range Bar ── */}
                     {surah.juz.length > 0 && (
                         <div className="border-t border-border px-6 py-3">
-                            <div className=" flex justify-center flex-wrap items-center gap-3">
+                            <div className="flex justify-center flex-wrap items-center gap-3">
                                 <span className="text-xs font-semibold uppercase tracking-widest text-text-muted">Juz Breakdown</span>
                                 {surah.juz.map((j) => (
                                     <span
@@ -66,19 +63,9 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
                         </div>
                     )}
                 </div>
-                {/* ── All Verses (when not searching) ── */}
-                <section className="py-4 space-y-4 mx-auto">
-                    {verses.map(([key, text], i) => (
-                        <AyathCard
-                            key={key}
-                            verseNumber={i + 1}
-                            surahName={surah.name}
-                            verseKey={key}
-                            arabicText={text}
-                            translation={translation.verse[key]}
-                        />
-                    ))}
-                </section>
+
+                {/* ── Search input + Verses (client) ── */}
+                <SurahPageClient verses={verses} translations={translation.verse} surahName={surah.name} />
             </div>
 
             {/* ── Footer ── */}
@@ -88,5 +75,4 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
         </main>
     );
 };
-
 export default SurahPage;
