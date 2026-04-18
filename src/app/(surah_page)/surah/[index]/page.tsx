@@ -1,6 +1,7 @@
 import SurahPageClient from "@/components/ui/surah/SurahPageClient";
 import { getSingleSurah, getSingleTranslation, getSurahNames } from "@/utils/fetchData";
 import { Surah, Translation } from "@/utils/types";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
     const surahs = await getSurahNames();
@@ -11,6 +12,16 @@ export async function generateStaticParams() {
 }
 
 export const dynamicParams = false;
+
+export async function generateMetadata({ params }: { params: Promise<{ index: string }> }): Promise<Metadata> {
+    const { index } = await params;
+    const surah = await getSingleSurah(index);
+
+    return {
+        title: `Surah ${surah.name} (${surah.index}) | Al Quran`,
+        description: `Read Surah ${surah.name} – ${surah.count} verses`,
+    };
+}
 
 const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => {
     const { index } = await params;

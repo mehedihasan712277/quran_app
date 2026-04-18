@@ -2,6 +2,12 @@ import AllSurahList from "@/components/ui/home/AllSurahList";
 import Hero from "@/components/ui/home/Hero";
 import logo from "@/assets/quran.png";
 import Image from "next/image";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Al Quran | Home",
+    description: "Your daily Quran companion – browse all 114 Surahs",
+};
 
 const page = () => {
     return (
