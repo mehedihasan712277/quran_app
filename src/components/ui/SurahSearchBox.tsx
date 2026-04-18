@@ -77,7 +77,7 @@ const SurahSearchBox = ({ surahs, cardClasses = "grid grid-cols-1 gap-2" }: Sura
     return (
         <div className="space-y-4">
             {/* Search + Filter row */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 px-4 xl:px-0">
                 {/* Search input */}
                 <div className="relative flex-1">
                     <Search size={15} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" strokeWidth={2} />

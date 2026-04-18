@@ -14,7 +14,9 @@ const Navbar = () => {
 
     return (
         <div>
-            <nav className={`flex justify-between items-center h-25 ${checkHome ? " border-b border-border px-4" : "max-w-5xl mx-auto"}`}>
+            <nav
+                className={`flex justify-between items-center h-25 ${checkHome ? " border-b border-border px-4" : "max-w-5xl mx-auto px-4 xl:px-0"}`}
+            >
                 <div className="space-y-1">
                     <div className="flex gap-2">
                         <Image src={logo} width={35} height={35} alt="logo" />
