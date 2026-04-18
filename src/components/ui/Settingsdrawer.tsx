@@ -15,7 +15,7 @@ const ToggleSwitch = ({ checked, onChange }: { checked: boolean; onChange: () =>
         role="switch"
         aria-checked={checked}
         onClick={onChange}
-        className={`relative h-5 w-9 shrink-0 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 ${
+        className={`relative h-5 w-9 shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/50 ${
             checked ? "bg-brand" : "bg-border"
         }`}
     >

@@ -6,7 +6,7 @@ import SettingsDrawer from "@/components/ui/Settingsdrawer";
 const SurahLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <SurahSettingsProvider>
-            <div className="relative grid h-[calc(100vh-100px)] lg:grid-cols-4">
+            <div className="relative grid h-[calc(100vh-100px)] lg:grid-cols-4 px-4">
                 {/* ── Surah list sidebar — desktop only ── */}
                 <aside className="hidden overflow-y-auto custom-scrollbar lg:block lg:col-span-1 lg:pr-1">
                     <AllSurahList classes="grid grid-cols-1 gap-2" />

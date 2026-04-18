@@ -1,33 +1,36 @@
+"use client";
+
 import Image from "next/image";
 import ThemeSwitcher from "./theme/ThemeSwitcher";
 import logo from "@/assets/quran.png";
+import home from "@/assets/home.png";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+    const pathname = usePathname();
+
+    const checkHome = pathname.includes("/surah");
+
     return (
         <div>
-            <nav className="flex justify-between items-center h-25 border-b border-border">
-                <div>
-                    <Image src={logo} width={40} height={40} alt="logo"></Image>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="text-text-muted">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="lucide lucide-settings-icon lucide-settings"
-                        >
-                            <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
-                            <circle cx="12" cy="12" r="3" />
-                        </svg>
+            <nav className={`flex justify-between items-center h-25 ${checkHome ? " border-b border-border px-4" : "max-w-5xl mx-auto"}`}>
+                <div className="space-y-1">
+                    <div className="flex gap-2">
+                        <Image src={logo} width={35} height={35} alt="logo" />
+                        <p className="text-3xl font-bold uppercase">القرآن</p>
                     </div>
-                    <ThemeSwitcher></ThemeSwitcher>
+                    <p className="text-text-muted uppercase text-sm tracking-wider">quran mazid</p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <ThemeSwitcher />
+
+                    {checkHome && (
+                        <Link href="/">
+                            <Image src={home} width={30} height={30} alt="home" />
+                        </Link>
+                    )}
                 </div>
             </nav>
         </div>

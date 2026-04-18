@@ -54,12 +54,14 @@ export default function RootLayout({
             ${notoNaskh.variable}
             h-full antialiased`}
         >
-            <body className="min-h-full">
+            <body className="min-h-full ">
                 <ThemeProvider>
-                    <div className="sticky top-0 z-10 bg-bg-main">
-                        <Navbar></Navbar>
+                    <div className="max-w-480 mx-auto">
+                        <div className="sticky top-0 z-10 bg-bg-main">
+                            <Navbar></Navbar>
+                        </div>
+                        <div>{children}</div>
                     </div>
-                    <div>{children}</div>
                 </ThemeProvider>
             </body>
         </html>

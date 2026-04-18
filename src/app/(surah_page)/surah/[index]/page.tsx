@@ -17,64 +17,57 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
     return (
         <main className="bg-bg-main pt-2">
             <div>
-                {/* ── Header Banner ── */}
-                <div className="relative overflow-hidden bg-brand-gradient rounded-t-2xl py-16 px-6">
-                    <div
-                        className="pointer-events-none absolute inset-0 opacity-10"
-                        style={{
-                            backgroundImage: "repeating-linear-gradient(45deg, white 0, white 1px, transparent 0, transparent 50%)",
-                            backgroundSize: "24px 24px",
-                        }}
-                    />
-                    <div className="relative mx-auto max-w-3xl text-center">
-                        <span className="mb-4 inline-block rounded-full border border-white/30 bg-white/10 px-4 py-1 text-sm font-medium text-white/80 backdrop-blur-sm">
-                            Surah {surah.index}
-                        </span>
-                        <h1 className="font-outfit text-4xl font-bold tracking-tight text-white md:text-5xl">{surah.name}</h1>
-                        <div className="mx-auto my-5 h-px w-24 bg-white/30" />
-                        <div className="flex justify-center gap-8 text-white/70 text-sm">
-                            <div className="flex flex-col items-center gap-0.5">
-                                <span className="text-2xl font-semibold text-white">{surah.count}</span>
-                                <span>Verses</span>
+                <div className="border border-border rounded-2xl overflow-hidden">
+                    {/* ── Header Banner ── */}
+                    <div className="relative overflow-hidden bg-bg-soft py-16 px-6">
+                        <div className="relative mx-auto max-w-3xl text-center">
+                            <span className="mb-4 inline-block rounded-full border border-white/30 bg-brand/10 px-4 py-1 text-sm font-medium text-text-primary backdrop-blur-sm">
+                                Surah {surah.index}
+                            </span>
+                            <h1 className="font-outfit text-2xl text-text-primary">{surah.name}</h1>
+                            <div className="flex justify-center gap-8 text-text-primary/70 text-sm">
+                                <div className="flex flex-col items-center gap-0.5">
+                                    <span className="text-2xl font-semibold text-text-primary">{surah.count}</span>
+                                    <span>Verses</span>
+                                </div>
+                                <div className="w-px bg-white/20" />
+                                <div className="flex flex-col items-center gap-0.5">
+                                    <span className="text-2xl font-semibold text-text-primary">{surah.juz.length}</span>
+                                    <span>{surah.juz.length === 1 ? "Juz" : "Juz sections"}</span>
+                                </div>
+                                <div className="w-px bg-white/20" />
+                                <div className="flex flex-col items-center gap-0.5">
+                                    <span className="text-2xl font-semibold text-text-primary">{surah.juz[0]?.index ?? "—"}</span>
+                                    <span>Juz number</span>
+                                </div>
                             </div>
-                            <div className="w-px bg-white/20" />
-                            <div className="flex flex-col items-center gap-0.5">
-                                <span className="text-2xl font-semibold text-white">{surah.juz.length}</span>
-                                <span>{surah.juz.length === 1 ? "Juz" : "Juz sections"}</span>
-                            </div>
-                            <div className="w-px bg-white/20" />
-                            <div className="flex flex-col items-center gap-0.5">
-                                <span className="text-2xl font-semibold text-white">{surah.juz[0]?.index ?? "—"}</span>
-                                <span>Juz number</span>
-                            </div>
+
+                            {/* ── Search box ── */}
+                            <section className="py-8 mx-auto">
+                                <AyahSearchBox verses={verses} translations={translation.verse} surahName={surah.name} />
+                            </section>
                         </div>
                     </div>
+
+                    {/* ── Juz Range Bar ── */}
+                    {surah.juz.length > 0 && (
+                        <div className="border-t border-border px-6 py-3">
+                            <div className=" flex justify-center flex-wrap items-center gap-3">
+                                <span className="text-xs font-semibold uppercase tracking-widest text-text-muted">Juz Breakdown</span>
+                                {surah.juz.map((j) => (
+                                    <span
+                                        key={j._id ?? j.index}
+                                        className="rounded-full border border-border bg-bg-main px-3 py-0.5 text-xs text-text-secondary"
+                                    >
+                                        Juz {j.index} · {j.verse.start.replace("_", " ")} → {j.verse.end.replace("_", " ")}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
-
-                {/* ── Juz Range Bar ── */}
-                {surah.juz.length > 0 && (
-                    <div className="border-b border-border bg-bg-soft px-6 py-3 rounded-b-2xl">
-                        <div className=" flex justify-center flex-wrap items-center gap-3">
-                            <span className="text-xs font-semibold uppercase tracking-widest text-text-muted">Juz Breakdown</span>
-                            {surah.juz.map((j) => (
-                                <span
-                                    key={j._id ?? j.index}
-                                    className="rounded-full border border-border bg-bg-main px-3 py-0.5 text-xs text-text-secondary"
-                                >
-                                    Juz {j.index} · {j.verse.start.replace("_", " ")} → {j.verse.end.replace("_", " ")}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* ── Search box ── */}
-                <section className="py-8 px-4 max-w-3xl mx-auto">
-                    <AyahSearchBox verses={verses} translations={translation.verse} surahName={surah.name} />
-                </section>
-
                 {/* ── All Verses (when not searching) ── */}
-                <section className="py-4 space-y-4 px-4 max-w-3xl mx-auto">
+                <section className="py-4 space-y-4 mx-auto">
                     {verses.map(([key, text], i) => (
                         <AyathCard
                             key={key}

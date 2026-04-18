@@ -35,21 +35,18 @@ const highlight = (text: string, query: string) => {
 
 const AyahSearchBox = ({ verses, translations, surahName }: AyahSearchBoxProps) => {
     const [query, setQuery] = useState("");
-    const [focused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const { fontFamily, fontSize } = useSurahSettings();
 
     const arabicClass = fontFamily === "naskh" ? "font-arabic-naskh" : "font-arabic-kufi";
 
-    const showTranslations = focused || query.trim().length > 0;
-
     const results = useMemo(() => {
-        if (!query.trim()) return showTranslations ? verses : [];
+        if (!query.trim()) return [];
         const q = query.toLowerCase();
         return verses.filter(([key]) => translations[key]?.toLowerCase().includes(q));
-    }, [query, verses, translations, showTranslations]);
+    }, [query, verses, translations]);
 
-    const displayVerses = query.trim() ? results : showTranslations ? verses : [];
+    const displayVerses = query.trim() ? results : [];
 
     return (
         <div className="space-y-4">
@@ -61,10 +58,8 @@ const AyahSearchBox = ({ verses, translations, surahName }: AyahSearchBoxProps) 
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    onFocus={() => setFocused(true)}
-                    onBlur={() => setFocused(false)}
                     placeholder="Search by translation…"
-                    className="w-full rounded-xl border border-border bg-bg-soft py-2.5 pl-9 pr-9 text-sm text-text-primary placeholder:text-text-muted focus:border-brand/40 focus:bg-bg-main focus:outline-none focus:ring-1 focus:ring-brand/20 transition-colors duration-150"
+                    className="w-full rounded-xl border border-border bg-bg-soft py-2.5 pl-9 pr-9 text-sm text-text-primary placeholder:text-text-muted focus:border-brand/40 focus:bg-bg-main focus:outline-none focus:ring-1 focus:ring-brand/20"
                 />
                 {query && (
                     <button
