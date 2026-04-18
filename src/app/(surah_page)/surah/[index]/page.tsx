@@ -15,10 +15,10 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
     const verses = Object.entries(surah.verse);
 
     return (
-        <main className="bg-bg-main">
+        <main className="bg-bg-main pt-2">
             <div>
                 {/* ── Header Banner ── */}
-                <div className="relative overflow-hidden bg-brand-gradient py-16 px-6">
+                <div className="relative overflow-hidden bg-brand-gradient rounded-t-2xl py-16 px-6">
                     <div
                         className="pointer-events-none absolute inset-0 opacity-10"
                         style={{
@@ -53,8 +53,8 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
 
                 {/* ── Juz Range Bar ── */}
                 {surah.juz.length > 0 && (
-                    <div className="border-b border-border bg-bg-soft px-6 py-3">
-                        <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-3">
+                    <div className="border-b border-border bg-bg-soft px-6 py-3 rounded-b-2xl">
+                        <div className=" flex justify-center flex-wrap items-center gap-3">
                             <span className="text-xs font-semibold uppercase tracking-widest text-text-muted">Juz Breakdown</span>
                             {surah.juz.map((j) => (
                                 <span

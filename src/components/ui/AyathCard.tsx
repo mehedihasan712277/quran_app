@@ -11,7 +11,7 @@ interface AyathCardProps {
     translation?: string;
 }
 
-const AyathCard = ({ verseNumber, surahName, verseKey, arabicText, translation }: AyathCardProps) => {
+const AyathCard = ({ surahName, verseKey, arabicText, translation }: AyathCardProps) => {
     const [localShow, setLocalShow] = useState(false);
     const { fontFamily, fontSize, showAllTranslations } = useSurahSettings();
 
@@ -25,10 +25,10 @@ const AyathCard = ({ verseNumber, surahName, verseKey, arabicText, translation }
             {/* ── Verse number badge + controls ── */}
             <div className="mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-gradient text-xs font-bold text-white shadow-sm">
+                    {/* <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-gradient text-xs font-bold text-white shadow-sm">
                         {verseNumber}
-                    </div>
-                    <span className="text-xs text-text-muted">
+                    </div> */}
+                    <span className="text-xs text-brand">
                         {surahName} · {verseKey.replace("_", " ")}
                     </span>
                 </div>

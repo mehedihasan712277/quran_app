@@ -82,9 +82,13 @@ const AyahSearchBox = ({ verses, translations, surahName }: AyahSearchBoxProps) 
 
             {/* ── Result count pill ── */}
             {query.trim() && (
-                <p className="text-xs text-text-muted">
-                    {results.length === 0 ? "No verses matched" : `${results.length} verse${results.length !== 1 ? "s" : ""} matched`}
-                </p>
+                <div className="text-xs  text-green-500">
+                    {results.length === 0 ? (
+                        <span className="text-red-400">No verses matched</span>
+                    ) : (
+                        `${results.length} verse${results.length !== 1 ? "s" : ""} matched`
+                    )}
+                </div>
             )}
 
             {/* ── Verse list ── */}

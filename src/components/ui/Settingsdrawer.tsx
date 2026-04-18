@@ -62,7 +62,7 @@ const SettingsDrawer = () => {
                 `}
             >
                 {/* ── Header ── */}
-                <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-bg-main px-5 py-4">
+                <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-bg-main py-4">
                     <div className="flex items-center gap-2">
                         <SlidersHorizontal size={14} strokeWidth={2.5} className="text-brand" />
                         <h3 className="text-[11px] font-semibold uppercase tracking-widest text-text-primary">Display Settings</h3>
@@ -75,7 +75,7 @@ const SettingsDrawer = () => {
                     </button>
                 </div>
 
-                <div className="space-y-7 px-5 py-6">
+                <div className="space-y-7 py-6">
                     {/* ── Font Family ── */}
                     <div className="space-y-3">
                         <SectionLabel icon={Type} label="Arabic Font" />

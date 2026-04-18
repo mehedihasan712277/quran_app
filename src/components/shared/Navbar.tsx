@@ -5,7 +5,7 @@ import logo from "@/assets/quran.png";
 const Navbar = () => {
     return (
         <div>
-            <nav className="flex justify-between items-center h-25">
+            <nav className="flex justify-between items-center h-25 border-b border-border">
                 <div>
                     <Image src={logo} width={40} height={40} alt="logo"></Image>
                 </div>
