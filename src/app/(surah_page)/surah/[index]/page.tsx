@@ -41,7 +41,7 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
                                 Surah {surah.index}
                             </span>
                             <h1 className="font-outfit text-2xl text-white">{surah.name}</h1>
-                            <div className="flex justify-center gap-8 text-white/70 text-sm py-6">
+                            <div className="flex justify-center gap-4 sm:gap-8 text-white/70 text-sm py-6">
                                 <div className="flex flex-col items-center gap-0.5">
                                     <span className="text-2xl font-semibold text-white">{surah.count}</span>
                                     <span>Verses</span>
