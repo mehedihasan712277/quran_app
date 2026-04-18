@@ -46,7 +46,7 @@ const SizeStepRow = ({
                 <button
                     key={stepVal}
                     onClick={() => onChange(stepVal)}
-                    className={`flex-1 rounded-lg border py-1.5 text-[10px] font-semibold uppercase tracking-wide transition-colors ${
+                    className={`flex-1 rounded-lg border py-1.5 text-[10px] font-semibold uppercase tracking-wide ${
                         value === stepVal
                             ? "border-brand/40 bg-brand/5 text-brand ring-1 ring-brand/20"
                             : "border-border bg-bg-soft text-text-muted hover:border-brand/20"
@@ -128,7 +128,7 @@ const SettingsDrawer = () => {
                     </div>
                     <button
                         onClick={() => setDrawerOpen(false)}
-                        className="rounded-lg p-1.5 text-text-muted transition-colors hover:bg-bg-soft hover:text-text-primary lg:hidden"
+                        className="rounded-lg p-1.5 text-text-muted hover:bg-bg-soft hover:text-text-primary lg:hidden"
                     >
                         <X size={15} />
                     </button>
@@ -143,7 +143,7 @@ const SettingsDrawer = () => {
                                 <button
                                     key={value}
                                     onClick={() => setFontFamily(value)}
-                                    className={`flex flex-col items-center gap-2 rounded-xl border px-3 py-3.5 transition-colors ${
+                                    className={`flex flex-col items-center gap-2 rounded-xl border px-3 py-3.5 ${
                                         fontFamily === value
                                             ? "border-brand/40 bg-brand/5 ring-1 ring-brand/20"
                                             : "border-border bg-bg-soft hover:border-brand/20 hover:bg-bg-main"
@@ -190,7 +190,7 @@ const SettingsDrawer = () => {
                             tabIndex={0}
                             onClick={() => setShowAllTranslations(!showAllTranslations)}
                             onKeyDown={(e) => (e.key === "Enter" || e.key === " " ? setShowAllTranslations(!showAllTranslations) : undefined)}
-                            className={`flex w-full cursor-pointer items-center justify-between rounded-xl border px-4 py-3 transition-colors ${
+                            className={`flex w-full cursor-pointer items-center justify-between rounded-xl border px-4 py-3 ${
                                 showAllTranslations ? "border-brand/40 bg-brand/5" : "border-border bg-bg-soft hover:border-brand/20"
                             }`}
                         >
