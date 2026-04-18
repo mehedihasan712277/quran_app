@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 export type FontFamily = "naskh" | "kufi";
 
@@ -15,13 +15,36 @@ interface SurahSettingsContextType {
     setDrawerOpen: (v: boolean) => void;
 }
 
+const STORAGE_KEY = "surah-settings";
+
+function loadSettings() {
+    if (typeof window === "undefined") return null;
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch {
+        return null;
+    }
+}
+
 const SurahSettingsContext = createContext<SurahSettingsContextType | null>(null);
 
 export const SurahSettingsProvider = ({ children }: { children: React.ReactNode }) => {
-    const [fontFamily, setFontFamily] = useState<FontFamily>("naskh");
-    const [fontSize, setFontSize] = useState(20);
-    const [showAllTranslations, setShowAllTranslations] = useState(false);
-    const [drawerOpen, setDrawerOpen] = useState(false); // closed by default on mobile
+    const saved = loadSettings();
+
+    const [fontFamily, setFontFamily] = useState<FontFamily>(saved?.fontFamily ?? "naskh");
+    const [fontSize, setFontSize] = useState<number>(saved?.fontSize ?? 20);
+    const [showAllTranslations, setShowAllTranslations] = useState<boolean>(saved?.showAllTranslations ?? false);
+    const [drawerOpen, setDrawerOpen] = useState(false); // never persist — always closed on load
+
+    // Persist whenever relevant settings change
+    useEffect(() => {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ fontFamily, fontSize, showAllTranslations }));
+        } catch {
+            // storage unavailable (private mode, quota exceeded, etc.) — fail silently
+        }
+    }, [fontFamily, fontSize, showAllTranslations]);
 
     return (
         <SurahSettingsContext.Provider
