@@ -18,10 +18,12 @@ const Navbar = () => {
                 className={`flex justify-between items-center h-25 ${checkHome ? " border-b border-border px-4" : "max-w-5xl mx-auto px-4 xl:px-0"}`}
             >
                 <div className="space-y-1">
-                    <div className="flex gap-2">
-                        <Image src={logo} width={35} height={35} alt="logo" />
-                        <p className="text-3xl font-bold uppercase">القرآن</p>
-                    </div>
+                    <Link href="/" className="block">
+                        <div className="flex gap-2">
+                            <Image src={logo} width={35} height={35} alt="logo" />
+                            <p className="text-3xl font-bold uppercase">القرآن</p>
+                        </div>
+                    </Link>
                     <p className="text-text-muted uppercase text-sm tracking-wider">quran mazid</p>
                 </div>
 
