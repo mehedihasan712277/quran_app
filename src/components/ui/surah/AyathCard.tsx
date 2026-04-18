@@ -1,7 +1,7 @@
 "use client";
 
+import { useSurahSettings } from "@/components/shared/Surahsettingscontext";
 import { useState } from "react";
-import { useSurahSettings } from "../shared/Surahsettingscontext";
 
 interface AyathCardProps {
     verseNumber: number;
@@ -46,7 +46,7 @@ const AyathCard = ({ surahName, verseKey, arabicText, translation, forceShowTran
     const arabicClass = fontFamily === "naskh" ? "font-arabic-naskh" : "font-arabic-kufi";
 
     return (
-        <article className="group relative rounded-2xl border border-border bg-bg-soft px-6 pt-6 pb-7 transition-shadow duration-200 hover:shadow-md">
+        <article className="group relative rounded-2xl border border-border bg-bg-soft p-3 sm:px-6 sm:py-6 transition-shadow duration-200 hover:shadow-md">
             {/* ── Verse number badge + controls ── */}
             <div className="mb-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">

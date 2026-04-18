@@ -1,7 +1,7 @@
 "use client";
 
+import { useSurahSettings } from "@/components/shared/Surahsettingscontext";
 import { SlidersHorizontal } from "lucide-react";
-import { useSurahSettings } from "../shared/Surahsettingscontext";
 
 const MobileSettingsToggle = () => {
     const { setDrawerOpen } = useSurahSettings();

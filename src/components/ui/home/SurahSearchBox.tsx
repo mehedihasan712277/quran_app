@@ -5,6 +5,7 @@ import { Search, X } from "lucide-react";
 import { SurahName } from "@/utils/types";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 type FilterType = "all" | "makkiyah" | "madaniyah";
 
@@ -16,7 +17,7 @@ const FILTERS: { label: string; value: FilterType }[] = [
 
 const getBackground = (value: FilterType) => {
     if (value === "makkiyah") return "linear-gradient(135deg, #d97706, #b45309)";
-    if (value === "madaniyah") return "linear-gradient(135deg, #16a34a, #15803d)";
+    if (value === "madaniyah") return "linear-gradient(135deg, #2563eb, #1d4ed8)";
     return "linear-gradient(135deg, var(--color-brand-start), var(--color-brand-end))";
 };
 
@@ -24,8 +25,8 @@ const typeBadge = (type: string) => {
     const isMeccan = type.toLowerCase() === "makkiyah";
     return (
         <span
-            className={`text-[10px] font-medium px-2 py-0.5 rounded-md uppercase tracking-wide ${
-                isMeccan ? "bg-amber-500/10 text-amber-700" : "bg-green-500/10 text-green-700"
+            className={`text-[10px] font-medium px-2 py-0.5 rounded-md  tracking-widest ${
+                isMeccan ? "bg-amber-500/10 text-yellow-600" : "bg-blue-500/10 text-blue-600"
             }`}
         >
             {type}
@@ -41,11 +42,7 @@ const highlight = (text: string, query: string) => {
         <>
             {parts.map((part, i) =>
                 regex.test(part) ? (
-                    <mark
-                        key={i}
-                        className="rounded-sm px-0.5 text-amber-800 dark:text-amber-300"
-                        style={{ background: "oklch(0.97 0.12 85 / 0.35)" }}
-                    >
+                    <mark key={i} className="rounded-sm px-0.5 text-amber-800" style={{ background: "oklch(0.97 0.12 85 / 0.35)" }}>
                         {part}
                     </mark>
                 ) : (
@@ -64,6 +61,7 @@ interface SurahSearchBoxProps {
 const SurahSearchBox = ({ surahs, cardClasses = "grid grid-cols-1 gap-2" }: SurahSearchBoxProps) => {
     const [query, setQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+    const path = usePathname();
 
     const results = useMemo(() => {
         const q = query.trim().toLowerCase();
@@ -77,7 +75,7 @@ const SurahSearchBox = ({ surahs, cardClasses = "grid grid-cols-1 gap-2" }: Sura
     return (
         <div className="space-y-4">
             {/* Search + Filter row */}
-            <div className="flex items-center gap-3 px-4 xl:px-0">
+            <div className={`flex gap-3 px-4 xl:px-0 ${path.includes("/surah") ? "flex-col 2xl:flex-row" : "flex-col sm:flex-row"}`}>
                 {/* Search input */}
                 <div className="relative flex-1">
                     <Search size={15} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" strokeWidth={2} />
@@ -85,7 +83,7 @@ const SurahSearchBox = ({ surahs, cardClasses = "grid grid-cols-1 gap-2" }: Sura
                         type="text"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Search surah by name…"
+                        placeholder="Surah name"
                         className="w-full rounded-xl border border-border bg-bg-soft py-2.5 pl-9 pr-9 text-sm text-text-primary placeholder:text-text-muted focus:border-brand/40 focus:bg-bg-main focus:outline-none focus:ring-1 focus:ring-brand/20"
                     />
                     {query && (
@@ -99,14 +97,14 @@ const SurahSearchBox = ({ surahs, cardClasses = "grid grid-cols-1 gap-2" }: Sura
                 </div>
 
                 {/* Filter Buttons with Fade Effect */}
-                <div className="flex items-center gap-0.5 rounded-xl border border-border bg-bg-soft p-1">
+                <div className="grid grid-cols-3 gap-0.5 rounded-xl border border-border bg-bg-soft p-1">
                     {FILTERS.map((f) => {
                         const isActive = activeFilter === f.value;
                         return (
                             <motion.button
                                 key={f.value}
                                 onClick={() => setActiveFilter(f.value)}
-                                className={`relative px-3 py-1.5 text-xs font-medium rounded-lg transition-colors duration-150 overflow-hidden ${
+                                className={`relative px-3 py-2 text-xs font-medium rounded-lg transition-colors duration-150 overflow-hidden ${
                                     isActive ? "text-white" : "text-text-muted hover:text-text-primary"
                                 }`}
                                 whileHover={{ scale: 1.03 }}

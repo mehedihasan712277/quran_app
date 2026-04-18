@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import AyahSearchBox from "@/components/ui/AyahSearchBox";
-import AyathCard from "@/components/ui/AyathCard";
-
+import AyahSearchBox from "./AyahSearchBox";
+import AyathCard from "./AyathCard";
 interface Props {
     verses: [string, string][];
     translations: Record<string, string>;
@@ -30,7 +29,7 @@ const SurahPageClient = ({ verses, translations, surahName }: Props) => {
             />
 
             {/* ── Verse list ── */}
-            <section className="py-4 space-y-4 mx-auto">
+            <section className="py-4 space-y-4">
                 {displayVerses.length === 0 && query.trim() ? (
                     <div className="flex flex-col items-center gap-2 py-10 text-center text-text-muted">
                         <p className="text-sm">No verses matched &ldquo;{query}&rdquo;</p>
@@ -46,7 +45,7 @@ const SurahPageClient = ({ verses, translations, surahName }: Props) => {
                             translation={translations[key]}
                             forceShowTranslation={isSearchActive}
                             hideToggle={isSearchActive}
-                            highlightQuery={query} // 👈 add this
+                            highlightQuery={query}
                         />
                     ))
                 )}

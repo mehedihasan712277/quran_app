@@ -1,7 +1,7 @@
 "use client";
 
+import { FontFamily, useSurahSettings } from "@/components/shared/Surahsettingscontext";
 import { X, Type, Languages, SlidersHorizontal } from "lucide-react";
-import { FontFamily, useSurahSettings } from "../shared/Surahsettingscontext";
 
 const SectionLabel = ({ icon: Icon, label }: { icon: React.ElementType; label: string }) => (
     <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-text-muted">
@@ -56,7 +56,7 @@ const SettingsDrawer = () => {
                     fixed right-0 top-0 z-40 h-full w-72 overflow-y-auto custom-scrollbar
                     border-l border-border bg-bg-main
                     transition-transform duration-300 ease-in-out
-                    ${drawerOpen ? "translate-x-0" : "translate-x-full"}
+                    ${drawerOpen ? "translate-x-0 px-4" : "translate-x-full"}
                     lg:relative lg:right-auto lg:top-auto lg:z-auto
                     lg:h-full lg:w-full lg:translate-x-0 lg:border-none
                 `}

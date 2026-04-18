@@ -1,7 +1,7 @@
+import SurahPageClient from "@/components/ui/surah/SurahPageClient";
 import { getSingleSurah, getSingleTranslation } from "@/utils/fetchData";
 import { Surah, Translation } from "@/utils/types";
 
-import SurahPageClient from "@/components/ui/SurahPageClient";
 // ... other imports
 
 const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => {

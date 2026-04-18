@@ -19,7 +19,7 @@ const SurahSettingsContext = createContext<SurahSettingsContextType | null>(null
 
 export const SurahSettingsProvider = ({ children }: { children: React.ReactNode }) => {
     const [fontFamily, setFontFamily] = useState<FontFamily>("naskh");
-    const [fontSize, setFontSize] = useState(28);
+    const [fontSize, setFontSize] = useState(20);
     const [showAllTranslations, setShowAllTranslations] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false); // closed by default on mobile
 

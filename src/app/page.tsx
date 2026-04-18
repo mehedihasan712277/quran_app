@@ -1,5 +1,5 @@
-import AllSurahList from "@/components/ui/AllSurahList";
-import Hero from "@/components/ui/Hero";
+import AllSurahList from "@/components/ui/home/AllSurahList";
+import Hero from "@/components/ui/home/Hero";
 
 const page = () => {
     return (

@@ -23,8 +23,7 @@
     --color-text-inverse: oklch(0.98 0 0);
 
     /* ── Custom breakpoints ── */
-    --breakpoint-14i: 85rem; /* 1360px */
-    --breakpoint-2xl: 82rem; /* 1312px */
+    --breakpoint-2xl: 106rem; /* 1504px */
 
     /* ── Brand Gradient (for backgrounds) ── */
     --background-image-brand-gradient: linear-gradient(135deg, var(--color-brand-start), var(--color-brand-end));
