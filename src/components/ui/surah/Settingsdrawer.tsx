@@ -27,21 +27,80 @@ const ToggleSwitch = ({ checked, onChange }: { checked: boolean; onChange: () =>
     </button>
 );
 
+const SizeStepRow = ({
+    steps,
+    value,
+    min,
+    max,
+    onChange,
+}: {
+    steps: { label: string; value: number }[];
+    value: number;
+    min: number;
+    max: number;
+    onChange: (v: number) => void;
+}) => (
+    <>
+        <div className="flex gap-1.5">
+            {steps.map(({ label, value: stepVal }) => (
+                <button
+                    key={stepVal}
+                    onClick={() => onChange(stepVal)}
+                    className={`flex-1 rounded-lg border py-1.5 text-[10px] font-semibold uppercase tracking-wide transition-colors ${
+                        value === stepVal
+                            ? "border-brand/40 bg-brand/5 text-brand ring-1 ring-brand/20"
+                            : "border-border bg-bg-soft text-text-muted hover:border-brand/20"
+                    }`}
+                >
+                    {label}
+                </button>
+            ))}
+        </div>
+        <input
+            type="range"
+            min={min}
+            max={max}
+            step={1}
+            value={value}
+            onChange={(e) => onChange(Number(e.target.value))}
+            className="w-full accent-brand"
+        />
+    </>
+);
+
 const SettingsDrawer = () => {
-    const { fontFamily, setFontFamily, fontSize, setFontSize, showAllTranslations, setShowAllTranslations, drawerOpen, setDrawerOpen } =
-        useSurahSettings();
+    const {
+        fontFamily,
+        setFontFamily,
+        fontSize,
+        setFontSize,
+        translationFontSize,
+        setTranslationFontSize,
+        showAllTranslations,
+        setShowAllTranslations,
+        drawerOpen,
+        setDrawerOpen,
+    } = useSurahSettings();
 
     const fontOptions: { value: FontFamily; label: string; preview: string; className: string }[] = [
         { value: "naskh", label: "Naskh", preview: "نَسْخ", className: "font-arabic-naskh" },
         { value: "kufi", label: "Kufi", preview: "كُوفِي", className: "font-arabic-kufi" },
     ];
 
-    const sizeSteps = [
+    const arabicSizeSteps = [
         { label: "XS", value: 18 },
         { label: "S", value: 22 },
         { label: "M", value: 26 },
         { label: "L", value: 30 },
         { label: "XL", value: 36 },
+    ];
+
+    const translationSizeSteps = [
+        { label: "XS", value: 11 },
+        { label: "S", value: 13 },
+        { label: "M", value: 15 },
+        { label: "L", value: 17 },
+        { label: "XL", value: 20 },
     ];
 
     return (
@@ -84,7 +143,7 @@ const SettingsDrawer = () => {
                                 <button
                                     key={value}
                                     onClick={() => setFontFamily(value)}
-                                    className={`flex flex-col items-center gap-2 rounded-xl border px-3 py-3.5 ${
+                                    className={`flex flex-col items-center gap-2 rounded-xl border px-3 py-3.5 transition-colors ${
                                         fontFamily === value
                                             ? "border-brand/40 bg-brand/5 ring-1 ring-brand/20"
                                             : "border-border bg-bg-soft hover:border-brand/20 hover:bg-bg-main"
@@ -105,50 +164,33 @@ const SettingsDrawer = () => {
                         </div>
                     </div>
 
-                    {/* ── Font Size ── */}
+                    {/* ── Arabic Font Size ── */}
                     <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                            <SectionLabel icon={Type} label="Font Size" />
+                            <SectionLabel icon={Type} label="Arabic Size" />
                             <span className="text-[11px] font-semibold text-brand">{fontSize}px</span>
                         </div>
+                        <SizeStepRow steps={arabicSizeSteps} value={fontSize} min={18} max={38} onChange={setFontSize} />
+                    </div>
 
-                        <div className="flex gap-1.5">
-                            {sizeSteps.map(({ label, value }) => (
-                                <button
-                                    key={value}
-                                    onClick={() => setFontSize(value)}
-                                    className={`flex-1 rounded-lg border py-1.5 text-[10px] font-semibold uppercase tracking-wide ${
-                                        fontSize === value
-                                            ? "border-brand/40 bg-brand/5 text-brand ring-1 ring-brand/20"
-                                            : "border-border bg-bg-soft text-text-muted hover:border-brand/20"
-                                    }`}
-                                >
-                                    {label}
-                                </button>
-                            ))}
+                    {/* ── Translation Font Size ── */}
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                            <SectionLabel icon={Languages} label="Translation Size" />
+                            <span className="text-[11px] font-semibold text-brand">{translationFontSize}px</span>
                         </div>
-
-                        <input
-                            type="range"
-                            min={18}
-                            max={38}
-                            step={1}
-                            value={fontSize}
-                            onChange={(e) => setFontSize(Number(e.target.value))}
-                            className="w-full accent-brand"
-                        />
+                        <SizeStepRow steps={translationSizeSteps} value={translationFontSize} min={11} max={22} onChange={setTranslationFontSize} />
                     </div>
 
                     {/* ── Translation toggle ── */}
                     <div className="space-y-3">
                         <SectionLabel icon={Languages} label="Translation" />
-                        {/* ↓ Changed from <button> to <div> to avoid nested button (ToggleSwitch is also a button) */}
                         <div
                             role="button"
                             tabIndex={0}
                             onClick={() => setShowAllTranslations(!showAllTranslations)}
                             onKeyDown={(e) => (e.key === "Enter" || e.key === " " ? setShowAllTranslations(!showAllTranslations) : undefined)}
-                            className={`flex w-full cursor-pointer items-center justify-between rounded-xl border px-4 py-3 ${
+                            className={`flex w-full cursor-pointer items-center justify-between rounded-xl border px-4 py-3 transition-colors ${
                                 showAllTranslations ? "border-brand/40 bg-brand/5" : "border-border bg-bg-soft hover:border-brand/20"
                             }`}
                         >
@@ -160,7 +202,6 @@ const SettingsDrawer = () => {
                                     {showAllTranslations ? "Shown for every verse" : "Click per verse to reveal"}
                                 </p>
                             </div>
-                            {/* stopPropagation prevents the div's onClick from firing twice */}
                             <span onClick={(e) => e.stopPropagation()}>
                                 <ToggleSwitch checked={showAllTranslations} onChange={() => setShowAllTranslations(!showAllTranslations)} />
                             </span>
@@ -181,7 +222,10 @@ const SettingsDrawer = () => {
                             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
                         </p>
                         {showAllTranslations && (
-                            <p className="border-t border-border pt-2.5 text-xs leading-relaxed text-text-secondary">
+                            <p
+                                style={{ fontSize: `${translationFontSize}px` }}
+                                className="border-t border-border pt-2.5 leading-relaxed text-text-secondary"
+                            >
                                 In the name of Allah, the Entirely Merciful, the Especially Merciful.
                             </p>
                         )}

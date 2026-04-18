@@ -35,7 +35,7 @@ const highlight = (text: string, query: string) => {
 
 const AyathCard = ({ surahName, verseKey, arabicText, translation, forceShowTranslation, hideToggle, highlightQuery = "" }: AyathCardProps) => {
     const [localShow, setLocalShow] = useState(false);
-    const { fontFamily, fontSize, showAllTranslations } = useSurahSettings();
+    const { fontFamily, fontSize, translationFontSize, showAllTranslations } = useSurahSettings();
 
     const translationVisible = forceShowTranslation || showAllTranslations || localShow;
 
@@ -73,7 +73,7 @@ const AyathCard = ({ surahName, verseKey, arabicText, translation, forceShowTran
 
             {/* ── Translation ── */}
             {translationVisible && translation && (
-                <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-text-secondary">
+                <p style={{ fontSize: `${translationFontSize}px` }} className="mt-4 border-t border-border pt-4 leading-relaxed text-text-secondary">
                     {highlight(translation, highlightQuery)}
                 </p>
             )}

@@ -9,6 +9,8 @@ interface SurahSettingsContextType {
     setFontFamily: (f: FontFamily) => void;
     fontSize: number;
     setFontSize: (s: number) => void;
+    translationFontSize: number;
+    setTranslationFontSize: (s: number) => void;
     showAllTranslations: boolean;
     setShowAllTranslations: (v: boolean) => void;
     drawerOpen: boolean;
@@ -33,18 +35,16 @@ export const SurahSettingsProvider = ({ children }: { children: React.ReactNode 
     const saved = loadSettings();
 
     const [fontFamily, setFontFamily] = useState<FontFamily>(saved?.fontFamily ?? "naskh");
-    const [fontSize, setFontSize] = useState<number>(saved?.fontSize ?? 20);
+    const [fontSize, setFontSize] = useState<number>(saved?.fontSize ?? 26);
+    const [translationFontSize, setTranslationFontSize] = useState<number>(saved?.translationFontSize ?? 14);
     const [showAllTranslations, setShowAllTranslations] = useState<boolean>(saved?.showAllTranslations ?? false);
-    const [drawerOpen, setDrawerOpen] = useState(false); // never persist — always closed on load
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
-    // Persist whenever relevant settings change
     useEffect(() => {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ fontFamily, fontSize, showAllTranslations }));
-        } catch {
-            // storage unavailable (private mode, quota exceeded, etc.) — fail silently
-        }
-    }, [fontFamily, fontSize, showAllTranslations]);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ fontFamily, fontSize, translationFontSize, showAllTranslations }));
+        } catch {}
+    }, [fontFamily, fontSize, translationFontSize, showAllTranslations]);
 
     return (
         <SurahSettingsContext.Provider
@@ -53,6 +53,8 @@ export const SurahSettingsProvider = ({ children }: { children: React.ReactNode 
                 setFontFamily,
                 fontSize,
                 setFontSize,
+                translationFontSize,
+                setTranslationFontSize,
                 showAllTranslations,
                 setShowAllTranslations,
                 drawerOpen,
