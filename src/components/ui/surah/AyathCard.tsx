@@ -22,11 +22,7 @@ const highlight = (text: string, query: string) => {
         <>
             {parts.map((part, i) =>
                 regex.test(part) ? (
-                    <mark
-                        key={i}
-                        className="rounded-sm px-0.5 text-amber-800 dark:text-amber-300"
-                        style={{ background: "oklch(0.97 0.12 85 / 0.35)" }}
-                    >
+                    <mark key={i} className="rounded-sm px-0.5 text-black" style={{ background: "yellow" }}>
                         {part}
                     </mark>
                 ) : (
