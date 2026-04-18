@@ -1,7 +1,5 @@
 import { getSingleSurah, getSingleTranslation } from "@/utils/fetchData";
 import { Surah, Translation } from "@/utils/types";
-import bg from "@/assets/bg1.jpg";
-import Image from "next/image";
 
 import SurahPageClient from "@/components/ui/SurahPageClient";
 // ... other imports
@@ -17,26 +15,26 @@ const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => 
             <div className="space-y-6">
                 <div className="border border-border rounded-2xl overflow-hidden">
                     {/* ── Header Banner ── */}
-                    <div className="relative overflow-hidden py-12 px-6 w-full">
-                        <Image src={bg} alt="bg" fill className="absolute inset-0 z-0 object-cover opacity-30" />
-                        <div className="relative z-10 mx-auto max-w-3xl text-center space-y-4">
-                            <span className="inline-block rounded-full border border-white/30 bg-brand/10 px-4 py-1 text-sm font-medium text-text-primary backdrop-blur-sm">
+
+                    <div className="relative text-center space-y-4">
+                        <div className=" bg-hero px-8 py-8 space-y-4">
+                            <span className="inline-block rounded-full border border-white/30 bg-brand/10 px-4 py-1 text-sm font-medium text-white backdrop-blur-sm">
                                 Surah {surah.index}
                             </span>
-                            <h1 className="font-outfit text-2xl text-text-primary">{surah.name}</h1>
-                            <div className="flex justify-center gap-8 text-text-primary/70 text-sm py-6">
+                            <h1 className="font-outfit text-2xl text-white">{surah.name}</h1>
+                            <div className="flex justify-center gap-8 text-white/70 text-sm py-6">
                                 <div className="flex flex-col items-center gap-0.5">
-                                    <span className="text-2xl font-semibold text-text-primary">{surah.count}</span>
+                                    <span className="text-2xl font-semibold text-white">{surah.count}</span>
                                     <span>Verses</span>
                                 </div>
                                 <div className="w-px bg-white/20" />
                                 <div className="flex flex-col items-center gap-0.5">
-                                    <span className="text-2xl font-semibold text-text-primary">{surah.juz.length}</span>
+                                    <span className="text-2xl font-semibold text-white">{surah.juz.length}</span>
                                     <span>{surah.juz.length === 1 ? "Juz" : "Juz sections"}</span>
                                 </div>
                                 <div className="w-px bg-white/20" />
                                 <div className="flex flex-col items-center gap-0.5">
-                                    <span className="text-2xl font-semibold text-text-primary">{surah.juz[0]?.index ?? "—"}</span>
+                                    <span className="text-2xl font-semibold text-white">{surah.juz[0]?.index ?? "—"}</span>
                                     <span>Juz number</span>
                                 </div>
                             </div>
