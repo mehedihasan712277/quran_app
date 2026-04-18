@@ -21,7 +21,7 @@ export default function ThemeSwitcher() {
         <button
             onClick={toggleTheme}
             className="relative w-9 h-9 flex items-center justify-center rounded-full 
-                       bg-bg-soft hover:bg-bg-soft/80 transition-colors duration-200"
+                       bg-bg-soft hover:bg-brand-gradient transition-colors duration-200"
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         >
             <AnimatePresence mode="wait" initial={false}>

@@ -1,8 +1,16 @@
 import SurahPageClient from "@/components/ui/surah/SurahPageClient";
-import { getSingleSurah, getSingleTranslation } from "@/utils/fetchData";
+import { getSingleSurah, getSingleTranslation, getSurahNames } from "@/utils/fetchData";
 import { Surah, Translation } from "@/utils/types";
 
-// ... other imports
+export async function generateStaticParams() {
+    const surahs = await getSurahNames();
+
+    return surahs.map((surah) => ({
+        index: surah.index.toString(),
+    }));
+}
+
+export const dynamicParams = false;
 
 const SurahPage = async ({ params }: { params: Promise<{ index: string }> }) => {
     const { index } = await params;

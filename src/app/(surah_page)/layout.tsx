@@ -8,15 +8,15 @@ const SurahLayout = ({ children }: { children: React.ReactNode }) => {
         <SurahSettingsProvider>
             <div className="relative grid h-[calc(100vh-100px)] lg:grid-cols-3 xl:grid-cols-4 lg:px-4 py-2">
                 {/* ── Surah list sidebar — desktop only ── */}
-                <aside className="hidden overflow-y-auto custom-scrollbar xl:block xl:col-span-1 xl:pr-1">
+                <aside className="hidden overflow-y-auto custom-scrollbar xl:block xl:col-span-1 xl:pr-2">
                     <AllSurahList classes="grid grid-cols-1 gap-2" />
                 </aside>
 
                 {/* ── Main content ── */}
-                <div className="col-span-4 overflow-y-auto custom-scrollbar lg:col-span-2 pl-4 pr-4 lg:pl-0 lg:pr-1 xl:px-1">{children}</div>
+                <div className="col-span-4 overflow-y-auto custom-scrollbar lg:col-span-2 pl-4 pr-4 lg:pl-0 lg:pr-2 xl:px-2">{children}</div>
 
                 {/* ── Settings drawer — right col on desktop, overlay on mobile ── */}
-                <aside className="lg:col-span-1 lg:overflow-y-auto lg:custom-scrollbar lg:pl-1">
+                <aside className="lg:col-span-1 lg:overflow-y-auto lg:custom-scrollbar lg:pl-2">
                     <SettingsDrawer />
                 </aside>
             </div>

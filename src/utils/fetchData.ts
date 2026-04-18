@@ -14,7 +14,7 @@ import {
 
 export const getSurahs = async (): Promise<Surah[]> => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/surahs`, {
-        next: { revalidate: 300 },
+        next: { revalidate: 3600 },
     });
 
     if (!res.ok) throw new Error("Failed to fetch surahs");
@@ -25,7 +25,7 @@ export const getSurahs = async (): Promise<Surah[]> => {
 
 export const getSingleSurah = async (index: string): Promise<Surah> => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/surahs/${index}`, {
-        next: { revalidate: 300 },
+        next: { revalidate: 3600 },
     });
 
     if (!res.ok) throw new Error("Failed to fetch surah");
@@ -38,7 +38,7 @@ export const getSingleSurah = async (index: string): Promise<Surah> => {
 
 export const getTranslations = async (): Promise<Translation[]> => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/translations`, {
-        next: { revalidate: 300 },
+        next: { revalidate: 3600 },
     });
 
     if (!res.ok) throw new Error("Failed to fetch surahs");
@@ -49,7 +49,7 @@ export const getTranslations = async (): Promise<Translation[]> => {
 
 export const getSingleTranslation = async (index: string): Promise<Translation> => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/translations/${index}`, {
-        next: { revalidate: 300 },
+        next: { revalidate: 3600 },
     });
 
     if (!res.ok) throw new Error("Failed to fetch surah");
@@ -62,7 +62,7 @@ export const getSingleTranslation = async (index: string): Promise<Translation> 
 
 export const getSurahNames = async (): Promise<SurahName[]> => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/surahnames`, {
-        next: { revalidate: 300 },
+        next: { revalidate: 3600 },
     });
 
     if (!res.ok) throw new Error("Failed to fetch surahs");
@@ -73,7 +73,7 @@ export const getSurahNames = async (): Promise<SurahName[]> => {
 
 export const getSingleSurahName = async (index: string): Promise<SurahName> => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/surahnames/${index}`, {
-        next: { revalidate: 300 },
+        next: { revalidate: 3600 },
     });
 
     if (!res.ok) throw new Error("Failed to fetch surah");

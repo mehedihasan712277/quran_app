@@ -25,12 +25,12 @@ const Navbar = () => {
                     <p className="text-text-muted uppercase text-sm tracking-wider">quran mazid</p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                     <ThemeSwitcher />
 
                     {checkHome && (
                         <Link href="/">
-                            <Image src={home} width={30} height={30} alt="home" />
+                            <Image src={home} width={25} height={25} alt="home" className="hover:scale-110 transition duration-150" />
                         </Link>
                     )}
                 </div>

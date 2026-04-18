@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import { Search, X } from "lucide-react";
 import { SurahName } from "@/utils/types";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 type FilterType = "all" | "makkiyah" | "madaniyah";
@@ -25,7 +24,7 @@ const typeBadge = (type: string) => {
     const isMeccan = type.toLowerCase() === "makkiyah";
     return (
         <span
-            className={`text-[10px] font-medium px-2 py-0.5 rounded-md  tracking-widest ${
+            className={`text-[10px] font-medium px-2 py-0.5 rounded-md tracking-widest ${
                 isMeccan ? "bg-amber-500/10 text-yellow-600" : "bg-blue-500/10 text-blue-600"
             }`}
         >
@@ -62,6 +61,7 @@ const SurahSearchBox = ({ surahs, cardClasses = "grid grid-cols-1 gap-2" }: Sura
     const [query, setQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState<FilterType>("all");
     const path = usePathname();
+    const activeSurahIndex = path.match(/\/surah\/(\d+)/)?.[1] ?? null;
 
     const results = useMemo(() => {
         const q = query.trim().toLowerCase();
@@ -96,149 +96,112 @@ const SurahSearchBox = ({ surahs, cardClasses = "grid grid-cols-1 gap-2" }: Sura
                     )}
                 </div>
 
-                {/* Filter Buttons with Fade Effect */}
+                {/* Filter Buttons */}
                 <div className="grid grid-cols-3 gap-0.5 rounded-xl border border-border bg-bg-soft p-1">
                     {FILTERS.map((f) => {
                         const isActive = activeFilter === f.value;
                         return (
-                            <motion.button
+                            <button
                                 key={f.value}
                                 onClick={() => setActiveFilter(f.value)}
-                                className={`relative px-3 py-2 text-xs font-medium rounded-lg transition-colors duration-150 overflow-hidden ${
+                                className={`relative px-3 py-2 text-xs font-medium rounded-lg transition-all duration-200 overflow-hidden ${
                                     isActive ? "text-white" : "text-text-muted hover:text-text-primary"
                                 }`}
-                                whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.97 }}
-                                animate={{
-                                    background: isActive ? getBackground(f.value) : "transparent",
-                                }}
-                                transition={{
-                                    background: { duration: 0.25, ease: "easeInOut" },
-                                }}
+                                style={{ background: isActive ? getBackground(f.value) : "transparent" }}
                             >
-                                {/* Subtle fade overlay for active state */}
-                                <motion.div
-                                    className="absolute inset-0 rounded-lg"
-                                    initial={false}
-                                    animate={{
-                                        opacity: isActive ? 1 : 0,
-                                    }}
-                                    transition={{ duration: 0.2 }}
-                                    style={{
-                                        background: isActive ? getBackground(f.value) : "transparent",
-                                    }}
-                                />
-
-                                <span className="relative z-10">{f.label}</span>
-                            </motion.button>
+                                {f.label}
+                            </button>
                         );
                     })}
                 </div>
             </div>
 
             {/* Result count */}
-            <AnimatePresence mode="wait">
-                {query.trim() && (
-                    <motion.p
-                        key={results.length === 0 ? "none" : "found"}
-                        initial={{ opacity: 0, y: -4 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -4 }}
-                        transition={{ duration: 0.15 }}
-                        className="text-xs text-brand"
-                    >
-                        {results.length === 0 ? (
-                            <span className="text-red-400">No surahs matched</span>
-                        ) : (
-                            `${results.length} surah${results.length !== 1 ? "s" : ""} found`
-                        )}
-                    </motion.p>
-                )}
-            </AnimatePresence>
+            {query.trim() && (
+                <p className="text-xs text-brand">
+                    {results.length === 0 ? (
+                        <span className="text-red-400">No surahs matched</span>
+                    ) : (
+                        `${results.length} surah${results.length !== 1 ? "s" : ""} found`
+                    )}
+                </p>
+            )}
 
             {/* Surah grid */}
-            <AnimatePresence mode="wait">
-                {results.length > 0 ? (
-                    <motion.div
-                        key={`${activeFilter}-${query}`}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className={cardClasses}
-                    >
-                        {results.map((surah, i) => (
-                            <motion.div
-                                key={surah._id}
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.18, delay: i * 0.025, ease: "easeOut" }}
-                            >
-                                <Link href={`/surah/${surah.index}`}>
-                                    <div className="group relative bg-bg-main border border-border rounded-xl px-4 py-3.5 flex flex-col gap-1 cursor-pointer transition-transform duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:bg-bg-soft hover:shadow-[0_4px_16px_oklch(40.23%_0.17_274.6/0.07)] overflow-hidden">
-                                        {/* Left accent bar */}
-                                        <span className="absolute left-0 top-0 bottom-0 w-0.75 rounded-l-xl bg-linear-to-b from-brand-start to-brand-end opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            {results.length > 0 ? (
+                <div className={cardClasses}>
+                    {results.map((surah) => {
+                        const isSelected = activeSurahIndex === surah.index;
+                        return (
+                            <Link key={surah._id} href={`/surah/${surah.index}`}>
+                                <div
+                                    className={`group relative rounded-xl px-4 py-3.5 flex flex-col gap-1 cursor-pointer transition-transform duration-200 overflow-hidden
+                                        hover:-translate-y-0.5 hover:border-brand/40 hover:bg-bg-soft hover:shadow-[0_4px_16px_oklch(40.23%_0.17_274.6/0.07)]
+                                        ${
+                                            isSelected
+                                                ? "-translate-y-0.5 border border-brand/40 bg-bg-soft shadow-[0_4px_16px_oklch(40.23%_0.17_274.6/0.07)]"
+                                                : "border border-border bg-bg-main"
+                                        }`}
+                                >
+                                    {/* Left accent bar */}
+                                    <span
+                                        className={`absolute left-0 top-0 bottom-0 w-0.75 rounded-l-xl bg-linear-to-b from-brand-start to-brand-end transition-opacity duration-200
+                                            ${isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                                    />
 
-                                        {/* Top row */}
-                                        <div className="flex items-start gap-2.5">
-                                            <div className="flex-1">
-                                                <div className="font-medium text-[15px] space-x-3">
-                                                    <span className="text-brand">{Number(surah.index)}. </span>{" "}
-                                                    <span className="text-text-primary truncate leading-tight">
-                                                        Surah {highlight(surah.title, query)}
-                                                    </span>
-                                                </div>
-                                                <p className="pl-6.5 text-2xl font-bold text-text-muted mt-0.5 text-left" dir="rtl">
-                                                    {surah.titleAr}
-                                                </p>
+                                    {/* Top row */}
+                                    <div className="flex items-start gap-2.5">
+                                        <div className="flex-1">
+                                            <div className="font-medium text-[15px] space-x-3">
+                                                <span className="text-brand">{Number(surah.index)}. </span>{" "}
+                                                <span className="text-text-primary truncate leading-tight">
+                                                    Surah {highlight(surah.title, query)}
+                                                </span>
                                             </div>
-                                            {typeBadge(surah.type)}
+                                            <p className="pl-6.5 text-2xl font-bold text-text-muted mt-0.5 text-left" dir="rtl">
+                                                {surah.titleAr}
+                                            </p>
                                         </div>
+                                        {typeBadge(surah.type)}
+                                    </div>
 
-                                        {/* Meta row */}
-                                        <div className="flex items-center gap-3.5 justify-end">
-                                            <div className="flex flex-col gap-0.5">
-                                                <span className="text-[10px] text-text-muted uppercase tracking-widest">Verses</span>
-                                                <span className="text-[13px] text-text-secondary">{surah.count}</span>
-                                            </div>
-                                            <div className="w-px h-7 bg-border" />
-                                            <div className="flex flex-col gap-0.5">
-                                                <span className="text-[10px] text-text-muted uppercase tracking-widest">Page</span>
-                                                <span className="text-[13px] text-text-secondary">{surah.pages}</span>
-                                            </div>
-                                            <div className="w-px h-7 bg-border" />
-                                            <div className="flex flex-col gap-0.5">
-                                                <span className="text-[10px] text-text-muted uppercase tracking-widest">Juz</span>
-                                                <div className="flex flex-wrap gap-1 mt-0.5">
-                                                    {surah.juz.map((j, idx) => (
-                                                        <span
-                                                            key={idx}
-                                                            className="text-[10px] px-1.5 py-0.5 rounded border border-border bg-bg-soft text-text-muted"
-                                                        >
-                                                            {j.index}
-                                                        </span>
-                                                    ))}
-                                                </div>
+                                    {/* Meta row */}
+                                    <div className="flex items-center gap-3.5 justify-end">
+                                        <div className="flex flex-col gap-0.5">
+                                            <span className="text-[10px] text-text-muted uppercase tracking-widest">Verses</span>
+                                            <span className="text-[13px] text-text-secondary">{surah.count}</span>
+                                        </div>
+                                        <div className="w-px h-7 bg-border" />
+                                        <div className="flex flex-col gap-0.5">
+                                            <span className="text-[10px] text-text-muted uppercase tracking-widest">Page</span>
+                                            <span className="text-[13px] text-text-secondary">{surah.pages}</span>
+                                        </div>
+                                        <div className="w-px h-7 bg-border" />
+                                        <div className="flex flex-col gap-0.5">
+                                            <span className="text-[10px] text-text-muted uppercase tracking-widest">Juz</span>
+                                            <div className="flex flex-wrap gap-1 mt-0.5">
+                                                {surah.juz.map((j, idx) => (
+                                                    <span
+                                                        key={idx}
+                                                        className="text-[10px] px-1.5 py-0.5 rounded border border-border bg-bg-soft text-text-muted"
+                                                    >
+                                                        {j.index}
+                                                    </span>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
-                                </Link>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                ) : (
-                    <motion.div
-                        key="empty"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="flex flex-col items-center gap-2 py-10 text-center text-text-muted"
-                    >
-                        <Search size={28} strokeWidth={1.5} className="opacity-30" />
-                        <p className="text-sm">{query.trim() ? `No surah named "${query}"` : `No ${activeFilter} surahs found`}</p>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                                </div>
+                            </Link>
+                        );
+                    })}
+                </div>
+            ) : (
+                <div className="flex flex-col items-center gap-2 py-10 text-center text-text-muted">
+                    <Search size={28} strokeWidth={1.5} className="opacity-30" />
+                    <p className="text-sm">{query.trim() ? `No surah named "${query}"` : `No ${activeFilter} surahs found`}</p>
+                </div>
+            )}
         </div>
     );
 };
